@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar" style="background-color: #3498db;">
+        <h2>Bem-vindo, {{ username }}</h2>
+        <a href="{{ url_for('logout') }}">Sair</a>
+    </header>
+
+    <div class="container">
+        <h3>Simular Crédito</h3>
+        {% if erro %}
+            <div class="alert">{{ erro }}</div>
+        {% endif %}
+        <form method="POST">
+            <label>Parcela:</label>
+            <input type="number" name="parcela" step="0.01" required>
+            <label>Data Base (DD/MM/AAAA):</label>
+            <input type="text" name="data_base" placeholder="01/10/2025" required>
+            <button type="submit">Calcular</button>
+        </form>
+
+        {% if resultados %}
+            <h3>Resultados</h3>
+            <table>
+                <tr>
+                    <th>Prazo</th>
+                    <th>Valor Calculado</th>
+                </tr>
+                {% for prazo, valor in resultados.items() %}
+                <tr>
+                    <td>{{ prazo }} meses</td>
+                    <td>{{ valor }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>
